@@ -1,3 +1,3 @@
 #!/bin/bash
 
-g++ -o bar bar.cc -O2 -s -lX11
+g++ *.cc -O2 -s -lX11 -o bar
