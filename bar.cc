@@ -48,7 +48,7 @@ string GetBattCapacity() {
 
 string GetEssid() {
   string result = GetStdoutFromCommand(WLAN_COMMAND);
-  return result.substr(0, result.size()-1);
+  return result.substr(0, result.size() - 1);
 }
 
 string GetTemp() {
@@ -60,7 +60,7 @@ string GetTemp() {
 
 string GetVolume() {
   string result = GetStdoutFromCommand(VOLUME_COMMAND);
-  return result;
+  return result.substr(0, result.size() - 1);
 }
 
 int main() {
