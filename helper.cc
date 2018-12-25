@@ -37,10 +37,10 @@ void XSetRoot(string name){
 }
 
 void ShowNotification(string heading, string msg) {
-  notify_init(heading.c_str());
+  notify_init("bar");
 
   NotifyNotification* n = notify_notification_new (heading.c_str(),
-      msg.c_str(), 0);
+      msg.c_str(), "dialog-warning");
 
   notify_notification_set_timeout(n, 10000); // 10 seconds
 
@@ -48,5 +48,10 @@ void ShowNotification(string heading, string msg) {
   {
     std::cerr << "show has failed" << std::endl;
   }
+
+  g_object_unref(G_OBJECT(n));
+
+  notify_uninit();
+
 }
 

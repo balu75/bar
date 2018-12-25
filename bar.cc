@@ -22,7 +22,7 @@ static const string TEMP1_FILE =
 static const string VOLUME_COMMAND =
   "/home/thomas/bin/get_volume.sh";
 
-static const int CAP_WARNING = 15;
+static const int CAP_WARNING = 20;
 
 int last_capacity = 100;
 
@@ -48,7 +48,7 @@ string GetBattCapacity() {
    infile >> bat_capacity;
    int capacity_as_number = stoi(bat_capacity);
    if (last_capacity >= CAP_WARNING && capacity_as_number < CAP_WARNING) {
-     ShowNotification("Battery Low", "Battery Low");
+     ShowNotification("Battery Low", "");
    }
    last_capacity = capacity_as_number;
    return bat_capacity;
