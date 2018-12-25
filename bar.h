@@ -9,4 +9,6 @@ string GetStdoutFromCommand(string cmd);
 
 void XSetRoot(string name);
 
+void ShowNotification(string heading, string msg);
+
 #endif

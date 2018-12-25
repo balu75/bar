@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 static const string BAT_CAPACITY_FILE = "/sys/class/power_supply/BAT0/capacity";
 static const string BAT_STATUS_FILE = "/sys/class/power_supply/BAT0/status";
 
@@ -22,6 +21,10 @@ static const string TEMP1_FILE =
 
 static const string VOLUME_COMMAND =
   "/home/thomas/bin/get_volume.sh";
+
+static const int CAP_WARNING = 15;
+
+int last_capacity = 100;
 
 string GetTime() {
    auto t = std::time(nullptr);
@@ -43,6 +46,11 @@ string GetBattCapacity() {
    ifstream infile(BAT_CAPACITY_FILE);
    string bat_capacity;
    infile >> bat_capacity;
+   int capacity_as_number = stoi(bat_capacity);
+   if (last_capacity >= CAP_WARNING && capacity_as_number < CAP_WARNING) {
+     ShowNotification("Battery Low", "Battery Low");
+   }
+   last_capacity = capacity_as_number;
    return bat_capacity;
 }
 

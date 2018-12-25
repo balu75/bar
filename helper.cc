@@ -2,6 +2,7 @@
 
 #include <X11/Xlib.h>
 #include <iostream>
+#include <libnotify/notify.h>
 
 using namespace std;
 
@@ -33,5 +34,19 @@ void XSetRoot(string name){
    XSync(display, 0);
 
    XCloseDisplay(display);
+}
+
+void ShowNotification(string heading, string msg) {
+  notify_init(heading.c_str());
+
+  NotifyNotification* n = notify_notification_new (heading.c_str(),
+      msg.c_str(), 0);
+
+  notify_notification_set_timeout(n, 10000); // 10 seconds
+
+  if (!notify_notification_show(n, 0))
+  {
+    std::cerr << "show has failed" << std::endl;
+  }
 }
 
