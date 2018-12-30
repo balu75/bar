@@ -78,8 +78,13 @@ int main() {
     oss.clear();
     oss.str("");
 
-    oss << GetVolume() << " " << GetTemp()<< " " << GetEssid() << " " << GetTime() << " "
-      << GetBattCapacity() << GetBattStatus().substr(0,1);
+
+    oss << "  " << GetVolume() << "%" 
+      << "  " << GetTemp() <<"°"
+      << "  " << GetEssid()
+      << "  " << GetTime()
+      << "  " << GetBattCapacity() << "% "
+      << GetBattStatus().substr(0,1);
 
     XSetRoot(oss.str());
     sleep(2);
