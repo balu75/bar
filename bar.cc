@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <unistd.h>
 #include <sstream>
 #include <ctime>
@@ -71,22 +72,34 @@ string GetVolume() {
   return result.substr(0, result.size() - 1);
 }
 
-int main() {
+void setBar() {
   ostringstream oss;
 
-  while(1) {
-    oss.clear();
-    oss.str("");
+  oss.clear();
+  oss.str("");
 
+  oss << "  " << GetVolume() << "%" 
+    << "  " << GetTemp() <<"°"
+    << "  " << GetEssid()
+    << "  " << GetTime()
+    << "  " << GetBattCapacity() << "% "
+    << GetBattStatus().substr(0,1);
 
-    oss << "  " << GetVolume() << "%" 
-      << "  " << GetTemp() <<"°"
-      << "  " << GetEssid()
-      << "  " << GetTime()
-      << "  " << GetBattCapacity() << "% "
-      << GetBattStatus().substr(0,1);
+  XSetRoot(oss.str());
+}
 
-    XSetRoot(oss.str());
-    sleep(2);
+int main(int argc, char* argv[]) {
+  bool isLoop = true;
+  if ( argc == 2 && strcmp(argv[1], "noloop") == 0 ) {
+    isLoop = false;
+  }
+
+  if (isLoop) {
+    while(1) {
+      setBar();
+      sleep(2);
+    }
+  } else {
+    setBar();
   }
 }
