@@ -4,6 +4,8 @@
 #include <iostream>
 #include <libnotify/notify.h>
 
+const int TEN_SECONDS=10000;
+
 using namespace std;
 
 string GetStdoutFromCommand(string cmd) {
@@ -22,7 +24,7 @@ string GetStdoutFromCommand(string cmd) {
   return data;
 }
 
-void XSetRoot(string name){
+void XSetRoot(string name) {
    Display *display;
 
    if (( display = XOpenDisplay(0x0)) == NULL ) {
@@ -42,7 +44,7 @@ void ShowNotification(string heading, string msg) {
   NotifyNotification* n = notify_notification_new (heading.c_str(),
       msg.c_str(), "dialog-warning");
 
-  notify_notification_set_timeout(n, 10000); // 10 seconds
+  notify_notification_set_timeout(n, TEN_SECONDS);
 
   if (!notify_notification_show(n, 0))
   {
@@ -52,6 +54,5 @@ void ShowNotification(string heading, string msg) {
   g_object_unref(G_OBJECT(n));
 
   notify_uninit();
-
 }
 
