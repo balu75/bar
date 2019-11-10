@@ -1,3 +1,4 @@
 bar
 nohup.out
 *.o
+.depend

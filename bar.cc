@@ -8,7 +8,6 @@
 #include <fstream>
 
 #include "bar.h"
-
 using namespace std;
 
 static const string BAT_CAPACITY_FILE = "/sys/class/power_supply/BAT0/capacity";
@@ -18,7 +17,7 @@ static const string WLAN_COMMAND =
   "iwconfig 2>/dev/null | sed -n 's/^.*ESSID:\"\\(.*\\)\".*$/\\1/p'";
 
 static const string TEMP1_FILE =
-  "/sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input";
+  "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input";
 
 static const string VOLUME_COMMAND =
   "/home/thomas/bin/get_volume.sh";
@@ -78,7 +77,7 @@ void setBar() {
   oss.clear();
   oss.str("");
 
-  oss << "  " << GetVolume() << "%" 
+  oss << "  " << GetVolume() << "%"
     << "  " << GetTemp() <<"°"
     << "  " << GetEssid()
     << "  " << GetTime()
