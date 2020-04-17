@@ -42,13 +42,15 @@ string GetBattStatus() {
    return bat_status;
 }
 
-string GetBattCapacity() {
+string GetBattCapacity(bool isLoop) {
    ifstream infile(BAT_CAPACITY_FILE);
    string bat_capacity;
    infile >> bat_capacity;
    int capacity_as_number = stoi(bat_capacity);
    if (last_capacity >= CAP_WARNING && capacity_as_number < CAP_WARNING) {
-     ShowNotification("Battery Low", "");
+       if (isLoop) {
+           ShowNotification("Battery Low", "");
+       }
    }
    last_capacity = capacity_as_number;
    return bat_capacity;
@@ -71,7 +73,7 @@ string GetVolume() {
   return result.substr(0, result.size() - 1);
 }
 
-void setBar() {
+void setBar(bool isLoop) {
   ostringstream oss;
 
   oss.clear();
@@ -81,7 +83,7 @@ void setBar() {
     << "  " << GetTemp() <<"°"
     << "  " << GetEssid()
     << "  " << GetTime()
-    << "  " << GetBattCapacity() << "% "
+    << "  " << GetBattCapacity(isLoop) << "% "
     << GetBattStatus().substr(0,1);
 
   XSetRoot(oss.str());
@@ -95,10 +97,10 @@ int main(int argc, char* argv[]) {
 
   if (isLoop) {
     while(1) {
-      setBar();
+      setBar(isLoop);
       sleep(2);
     }
   } else {
-    setBar();
+    setBar(isLoop);
   }
 }
