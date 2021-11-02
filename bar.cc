@@ -17,7 +17,7 @@ static const string WLAN_COMMAND =
   "iwconfig 2>/dev/null | sed -n 's/^.*ESSID:\"\\(.*\\)\".*$/\\1/p'";
 
 static const string TEMP1_FILE =
-  "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input";
+  "/proc/acpi/ibm/thermal";
 
 static const string VOLUME_COMMAND =
   "/home/thomas/bin/get_volume.sh";
@@ -64,8 +64,9 @@ string GetEssid() {
 string GetTemp() {
   ifstream infile(TEMP1_FILE);
   string temp;
-  infile >> temp;
-  return temp.substr(0,2);
+  getline(infile, temp);
+  string str = temp.substr(14,2);
+  return str;
 }
 
 string GetVolume() {
