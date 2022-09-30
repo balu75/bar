@@ -65,8 +65,12 @@ string GetTemp() {
   ifstream infile(TEMP1_FILE);
   string temp;
   getline(infile, temp);
-  string str = temp.substr(14,2);
-  return str;
+  if (temp.length() >= 17) {
+	  string str = temp.substr(14,2);
+	  cout << "Temp" << endl;
+	  return str;
+  }
+  return "";
 }
 
 string GetVolume() {
