@@ -2,6 +2,7 @@
 
 #include <X11/Xlib.h>
 #include <iostream>
+#include <fstream>
 #include <libnotify/notify.h>
 
 const int TEN_SECONDS=10000;
@@ -13,6 +14,10 @@ string GetStdoutFromCommand(string cmd) {
   FILE * stream;
   const int max_buffer = 256;
   char buffer[max_buffer];
+
+  ifstream f(cmd.c_str());
+  if (!f.good()) return "";
+
   cmd.append(" 2>&1");
 
   stream = popen(cmd.c_str(), "r");

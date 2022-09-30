@@ -56,26 +56,25 @@ string GetBattCapacity(bool isLoop) {
    return bat_capacity;
 }
 
-string GetEssid() {
+void GetEssid(ostringstream &oss) {
   string result = GetStdoutFromCommand(WLAN_COMMAND);
-  return result.substr(0, result.size() - 1);
+  if (result == "") return;
+  oss << "  " << result.substr(0, result.size() - 1);
 }
 
-string GetTemp() {
+void GetTemp(ostringstream &oss) {
   ifstream infile(TEMP1_FILE);
   string temp;
   getline(infile, temp);
   if (temp.length() >= 17) {
-	  string str = temp.substr(14,2);
-	  cout << "Temp" << endl;
-	  return str;
+	  oss  << "  " << temp.substr(14,2) <<"°";
   }
-  return "";
 }
 
-string GetVolume() {
+void GetVolume(ostringstream &oss) {
   string result = GetStdoutFromCommand(VOLUME_COMMAND);
-  return result.substr(0, result.size() - 1);
+  if (result == "") return;
+  oss << "  " << result.substr(0, result.size() - 1) << "%";
 }
 
 void setBar(bool isLoop) {
@@ -84,10 +83,11 @@ void setBar(bool isLoop) {
   oss.clear();
   oss.str("");
 
-  oss << "  " << GetVolume() << "%"
-    << "  " << GetTemp() <<"°"
-    << "  " << GetEssid()
-    << "  " << GetTime()
+  GetVolume(oss);
+  GetTemp(oss);
+  GetEssid(oss);
+
+  oss  << "  " << GetTime()
     << "  " << GetBattCapacity(isLoop) << "% "
     << GetBattStatus().substr(0,1);
 
